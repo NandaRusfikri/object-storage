@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    environment:
+      MINIO_ROOT_USER: "minioadmin"       # Ganti dengan username yang diinginkan
+      MINIO_ROOT_PASSWORD: "minioadmin"   # Ganti dengan password yang diinginkan
+    volumes:
+      - ./docker/data:/data                  # Volume untuk menyimpan data
+      - ./docker/config:/root/.minio          # Volume untuk menyimpan konfigurasi
+    ports:
+      - "9000:9000"                       # Port untuk akses MinIO UI
+      - "9001:9001"                       # Port untuk akses MinIO Console
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    
+  mc:
+    image: minio/mc:latest
+    container_name: minio-client
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set myminio http://minio:9000 minioadmin minioadmin &&
+      "
+    depends_on:
+      - minio
+

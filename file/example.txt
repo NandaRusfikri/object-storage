@@ -1,0 +1,2 @@
+item,price
+jacket,12.000
