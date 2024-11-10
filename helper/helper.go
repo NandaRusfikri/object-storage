@@ -74,7 +74,7 @@ func (m *MinioClient) DeleteFile(ctx context.Context, objectName string) error {
 func (m *MinioClient) GetObjectPresign(ctx context.Context, objectName string) string {
 
 	reqParams := make(url.Values)
-	reqParams.Set("response-content-disposition", "inline; filename=\"your-filename.txt\"")
+	reqParams.Set("response-content-disposition", fmt.Sprintf("inline; filename=%s", objectName))
 
 	// Generates a presigned url which expires in a day.
 	presignedURL, err := m.Client.PresignedGetObject(ctx, m.Bucket, objectName, time.Minute*60*60, reqParams)

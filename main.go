@@ -20,9 +20,9 @@ func main() {
 		log.Fatalf("Error initializing Minio client: %v", err)
 	}
 
-	objectName := "img.png"
-	filePath := "file/img.png"
-	contentType := "image/png"
+	objectName := "img.jpg"
+	filePath := "file/img.jpg"
+	contentType := "image/jpg"
 	//Upload file
 	err = minioClient.UploadFile(ctx, objectName, filePath, contentType)
 	if err != nil {
